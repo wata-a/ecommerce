@@ -24,7 +24,16 @@ SECRET_KEY = 'rqt8%*rg@saj%y%=qeo!t$^1od=&!fzji!1kr!2(90$0y-v_r7'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+# TEMPLATE_DEBUG = DEBUG
 
+# SETUP EMAIL
+ADMINS = (
+    ('Awatanabe', 'wat.pm22@gmail.com'),
+)
+
+MANAGERS = ADMINS
+
+# Hosts/domain names that are valid for this site; required if DEBUG is False
 ALLOWED_HOSTS = []
 
 
@@ -37,6 +46,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'south',
+    # 'registration',
 ]
 
 MIDDLEWARE = [
@@ -55,9 +66,14 @@ ROOT_URLCONF = 'market.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            '/Users/ayanowatanabe/Desktop/pyworks/PycharmProjects/intern/static/templates'
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
+            'OPTIONS': {
+                'debug': DEBUG,
+        },
             'context_processors': [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
@@ -67,6 +83,8 @@ TEMPLATES = [
         },
     },
 ]
+
+# TEMPLATE_DIRS = os.path.join(os.path.dirname(os.path.dirname(__file__))), "static", "templates")
 
 WSGI_APPLICATION = 'market.wsgi.application'
 
@@ -114,9 +132,23 @@ USE_L10N = True
 
 USE_TZ = True
 
+# Absolute filesystem path to the directory that will hold user-uploaded files.
+MEDIA_ROOT = '/Users/ayanowatanabe/Desktop/pyworks/PycharmProjects/intern/static/media'
+# internまで階層を上がる
+# MEDIA_ROOT = os.path.join(os.path.dirname(os.path.dirname(__file__))), "static", "media")
+
+# example: "http://example.com/media/", "http://media.example.com"
+MEDIA_URL = '/media/'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
+# static/static
+# STATIC_ROOT = os.path.join(os.path.dirname(os.path.dirname(__file__))), "static", "static-only")
+STATIC_ROOT = '/Users/ayanowatanabe/Desktop/pyworks/PycharmProjects/intern/static/static-only'
+# 追加の静的ファイル
+STATICFILES_DIRS = (
+    os.path.join(os.path.dirname(os.path.dirname(__file__))), "static", "static"),
+
 
 STATIC_URL = '/static/'
 

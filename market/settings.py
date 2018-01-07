@@ -26,6 +26,17 @@ SECRET_KEY = 'rqt8%*rg@saj%y%=qeo!t$^1od=&!fzji!1kr!2(90$0y-v_r7'
 DEBUG = True
 # TEMPLATE_DEBUG = DEBUG
 
+# Hosts/domain names that are valid for this site; required if DEBUG is False
+ALLOWED_HOSTS = ['0.0.0.0', '127.0.0.1']
+
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'hungrypy@gmail.com' # sendgrid
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD', 'yourpassword')
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = 'Python ecommerce <hungrypy@gmail.com>'
+BASE_URL = '127.0.0.1:8000'
+
 # SETUP EMAIL
 ADMINS = (
     ('Awatanabe', 'wat.pm22@gmail.com'),
@@ -33,21 +44,23 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
-# Hosts/domain names that are valid for this site; required if DEBUG is False
-ALLOWED_HOSTS = []
+
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    # 'django.contrib.admindocs',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'south',
+    # 'south',
     # 'registration',
+    # third party
+    'storages',
 ]
 
 MIDDLEWARE = [
@@ -61,19 +74,20 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+LOGOUT_REDIRECT_URL = '/login/'
 ROOT_URLCONF = 'market.urls'
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [
-            '/Users/ayanowatanabe/Desktop/pyworks/PycharmProjects/intern/static/templates'
-        ],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
+            # '/Users/ayanowatanabe/Desktop/pyworks/PycharmProjects/intern/static/templates'
+
         'APP_DIRS': True,
         'OPTIONS': {
-            'OPTIONS': {
-                'debug': DEBUG,
-        },
+            # 'OPTIONS': {
+            #     'debug': DEBUG,
+        # },
             'context_processors': [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
@@ -123,6 +137,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
 
 LANGUAGE_CODE = 'ja'
+# LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'Asia/Tokyo'
 
@@ -132,25 +147,36 @@ USE_L10N = True
 
 USE_TZ = True
 
-# Absolute filesystem path to the directory that will hold user-uploaded files.
-MEDIA_ROOT = '/Users/ayanowatanabe/Desktop/pyworks/PycharmProjects/intern/static/media'
-# internまで階層を上がる
-# MEDIA_ROOT = os.path.join(os.path.dirname(os.path.dirname(__file__))), "static", "media")
+STATIC_URL = '/static/'
 
-# example: "http://example.com/media/", "http://media.example.com"
-MEDIA_URL = '/media/'
-
+STATICFILES_DIRS = (
+    os.path.join(os.path.dirname(os.path.dirname(__file__))), "static", "static"),
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 # static/static
 # STATIC_ROOT = os.path.join(os.path.dirname(os.path.dirname(__file__))), "static", "static-only")
 STATIC_ROOT = '/Users/ayanowatanabe/Desktop/pyworks/PycharmProjects/intern/static/static-only'
 # 追加の静的ファイル
-STATICFILES_DIRS = (
-    os.path.join(os.path.dirname(os.path.dirname(__file__))), "static", "static"),
 
 
-STATIC_URL = '/static/'
+# example: "http://example.com/media/", "http://media.example.com"
+MEDIA_URL = '/media/'
+
+# Absolute filesystem path to the directory that will hold user-uploaded files.
+MEDIA_ROOT = '/Users/ayanowatanabe/Desktop/pyworks/PycharmProjects/intern/static/media'
+# internまで階層を上がる
+# MEDIA_ROOT = os.path.join(os.path.dirname(os.path.dirname(__file__))), "static", "media")
+
 
 AUTH_WALL_USERNAME = 'intern'
 AUTH_WALL_PASSWORD = 'hello123'
+
+CORS_REPLACE_HTTPS_REFERER      = False
+HOST_SCHEME                     = "http://"
+SECURE_PROXY_SSL_HEADER         = None
+SECURE_SSL_REDIRECT             = False
+SESSION_COOKIE_SECURE           = False
+CSRF_COOKIE_SECURE              = False
+SECURE_HSTS_SECONDS             = None
+SECURE_HSTS_INCLUDE_SUBDOMAINS  = False
+SECURE_FRAME_DENY               = False
